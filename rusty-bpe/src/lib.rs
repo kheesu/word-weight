@@ -7,3 +7,6 @@ pub use pretok::PreTokenizer;
 pub use trainer::{Trainer, Vocab};
 pub use tokenizer::Tokenizer;
 pub use stats::CorpusStats;
+
+#[cfg(feature = "python")]
+mod python;

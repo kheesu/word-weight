@@ -43,21 +43,7 @@ fn main() {
                 text.len()
             );
 
-            // Split text into chunks for parallel training.
-            let chunk_size = (text.len() / rayon::current_num_threads()).max(1);
-            let chunks: Vec<&str> = text
-                .as_bytes()
-                .chunks(chunk_size)
-                .map(|c| {
-                    // Align to valid UTF-8 boundary.
-                    let s = std::str::from_utf8(c).unwrap_or_else(|e| {
-                        std::str::from_utf8(&c[..e.valid_up_to()]).unwrap_or("")
-                    });
-                    s
-                })
-                .collect();
-
-            let vocab = trainer.train_parallel(&chunks, &pretok);
+            let vocab = trainer.train_text_parallel(&text, &pretok);
             eprintln!("Learned {} merges → {} tokens", vocab.merges.len(), vocab.vocab_size());
             vocab.save(output).expect("Failed to save model");
             eprintln!("Model saved to {output}");

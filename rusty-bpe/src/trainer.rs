@@ -86,6 +86,22 @@ impl Trainer {
         self.train_from_counts(word_counts)
     }
 
+    /// Convenience wrapper: splits `text` into per-thread chunks then calls `train_parallel`.
+    pub fn train_text_parallel(&self, text: &str, pretok: &PreTokenizer) -> Vocab {
+        let num_threads = rayon::current_num_threads().max(1);
+        let chunk_size = (text.len() / num_threads).max(1);
+        let chunks: Vec<&str> = text
+            .as_bytes()
+            .chunks(chunk_size)
+            .map(|c| {
+                std::str::from_utf8(c).unwrap_or_else(|e| {
+                    std::str::from_utf8(&c[..e.valid_up_to()]).unwrap_or("")
+                })
+            })
+            .collect();
+        self.train_parallel(&chunks, pretok)
+    }
+
     /// Parallel training — splits text into chunks and merges word counts via rayon.
     pub fn train_parallel(&self, chunks: &[&str], pretok: &PreTokenizer) -> Vocab {
         let word_counts = chunks

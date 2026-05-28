@@ -130,6 +130,78 @@ let stats = CorpusStats::from_tokens(&ids, corpus.len() as u64);
 stats.print_summary(&tok);
 ```
 
+## Python library
+
+The tokenizer is also available as a Python extension via [maturin](https://github.com/PyO3/maturin).
+
+### Install
+
+```sh
+pip install maturin
+maturin develop --features python   # installs into the current venv
+```
+
+Or build a wheel for distribution:
+
+```sh
+maturin build --release --features python
+pip install target/wheels/rusty_bpe-*.whl
+```
+
+### Usage
+
+```python
+import rusty_bpe
+import pandas as pd
+
+# Train
+vocab = rusty_bpe.train(open("corpus.txt").read(), vocab_size=8000, min_freq=2)
+vocab.save("model.json")
+
+# Load and encode
+tok = rusty_bpe.Tokenizer("model.json")
+ids = tok.encode("hello world")          # list[int]
+text = tok.decode(ids)                   # str
+
+# Parallel batch encode (rayon under the hood)
+results = tok.encode_batch(["doc one", "doc two", "doc three"])
+
+# Corpus statistics → pandas DataFrame
+stats = tok.stats(open("corpus.txt").read())
+df = pd.DataFrame(stats["token_freqs"], columns=["token_id", "count"])
+df["token"] = df["token_id"].apply(tok.token_str)
+print(f"Entropy: {stats['entropy']:.4f} bits")
+print(f"Bytes/token: {stats['compression_ratio']:.3f}")
+
+# For a pre-split corpus (faster — parallelises across documents)
+docs = [open(f).read() for f in doc_files]
+stats = tok.stats_parallel(docs)
+
+# Build tokenizer directly from a freshly trained vocab (no disk round-trip)
+vocab = rusty_bpe.train(corpus, vocab_size=4000)
+tok = rusty_bpe.Tokenizer.from_vocab(vocab)
+```
+
+### API reference
+
+| Symbol | Description |
+|---|---|
+| `train(text, vocab_size, min_freq=2) → Vocab` | Train BPE on a string, returns a `Vocab` |
+| `Vocab.save(path)` | Write model to JSON |
+| `Vocab.load(path) → Vocab` | Load model from JSON |
+| `Vocab.vocab_size` | Total token count (256 + merges) |
+| `Vocab.merges` | List of `(id_a, id_b)` merge rules |
+| `Tokenizer(model_path)` | Load tokenizer from a saved model file |
+| `Tokenizer.from_vocab(vocab)` | Build tokenizer from a `Vocab` object |
+| `Tokenizer.encode(text) → list[int]` | Encode one string |
+| `Tokenizer.decode(ids) → str` | Decode token IDs |
+| `Tokenizer.encode_batch(texts) → list[list[int]]` | Parallel encode |
+| `Tokenizer.token_str(id) → str` | String form of a single token |
+| `Tokenizer.stats(text) → dict` | Encode + compute corpus statistics |
+| `Tokenizer.stats_parallel(texts) → dict` | Same, parallel over a list |
+
+The `stats` dict contains: `total_tokens`, `unique_tokens`, `total_bytes`, `entropy` (bits), `compression_ratio` (bytes/token), `token_freqs` (list of `(token_id, count)` sorted by count descending).
+
 ## Module overview
 
 | Module | Description |

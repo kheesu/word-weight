@@ -1,0 +1,12 @@
+[build-system]
+requires = ["maturin>=1,<2"]
+build-backend = "maturin"
+
+[project]
+name = "rusty-tfidf"
+version = "0.1.0"
+description = "Fast TF-IDF with swappable TF and IDF weighting strategies"
+requires-python = ">=3.8"
+
+[tool.maturin]
+features = ["python"]

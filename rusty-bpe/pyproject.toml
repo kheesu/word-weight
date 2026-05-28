@@ -1,0 +1,13 @@
+[build-system]
+requires = ["maturin>=1,<2"]
+build-backend = "maturin"
+
+[project]
+name = "rusty-bpe"
+version = "0.1.0"
+description = "Fast byte-level BPE tokenizer for corpus analysis"
+requires-python = ">=3.8"
+
+[tool.maturin]
+# Activates the pyo3 bindings; the CLI binary is unaffected.
+features = ["python"]
