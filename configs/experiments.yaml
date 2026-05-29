@@ -1,0 +1,13 @@
+tfidf:
+  tf_method: RelativeFrequency   # matches rusty_tfidf.TfMethod
+  idf_method: Smooth
+  top_k_mean: 5                  # for top-k mean TF-IDF aggregation
+
+metrics:
+  tfidf_percentile_high: 90      # top 10%
+  token_cost_percentile_high: 90
+
+vocab_simulation:
+  k_values: [100, 500, 1000, 5000, 10000]
+
+residual_model: poisson          # linear | poisson | random_forest

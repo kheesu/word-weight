@@ -1,0 +1,23 @@
+corpus: wikipedia
+language: en
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.en
+split: train
+
+sizes:
+  small: 10_000
+  medium: 50_000
+  large: 100_000
+
+default_size: small
+
+preprocessing:
+  min_doc_length: 100       # characters
+  min_word_freq: 3
+  min_word_len: 2
+  max_word_len: 40
+  alphabetic_only: true     # primary filter; false = full noisy vocabulary
+
+paths:
+  raw: data/raw/wikipedia
+  processed: data/processed/wikipedia

@@ -1,0 +1,4 @@
+tfidf_metric,tokenizer,pearson_r,pearson_p,spearman_r,spearman_p,partial_length_r,partial_length_p,partial_freq_r,partial_freq_p
+tfidf_top_k_mean,custom_bpe,-0.1674,0.0,-0.2234,0.0,-0.1413,0.0,-0.105,0.0
+tfidf_max,custom_bpe,-0.1265,0.0,-0.2012,0.0,-0.1119,0.0,-0.0851,0.0
+tfidf_mean,custom_bpe,0.0083,0.0203,-0.0645,0.0,0.0705,0.0,-0.0222,0.0

@@ -1,0 +1,18 @@
+custom_bpe:
+  vocab_sizes: [1000, 5000, 10000, 30000, 50000]
+  default_vocab_size: 30000
+  min_freq: 2
+  model_dir: data/processed/bpe_models
+
+pretrained:
+  gpt2:
+    library: tiktoken
+    name: gpt2
+  bert:
+    library: transformers
+    name: bert-base-uncased
+  sentencepiece_unigram:
+    library: sentencepiece
+    model_path: data/external/sentencepiece/cc.en.300.bin
+    fallback_train: true
+    fallback_vocab_size: 32000

@@ -1,0 +1,7 @@
+tok_a,tok_b,top1k_rif_overlap
+bert_wordpiece,custom_bpe,0.3
+bert_wordpiece,gpt2,0.347
+bert_wordpiece,sentencepiece_unigram,0.258
+custom_bpe,gpt2,0.514
+custom_bpe,sentencepiece_unigram,0.369
+gpt2,sentencepiece_unigram,0.427

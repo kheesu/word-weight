@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "word-weight"
+version = "0.1.0"
+description = "Information-Weighted Tokenization Friction"
+requires-python = ">=3.10"
+dependencies = [
+    "rusty-bpe",
+    "rusty-tfidf",
+    "datasets>=2.20",
+    "transformers>=4.40",
+    "sentencepiece>=0.2",
+    "tiktoken>=0.7",
+    "scikit-learn>=1.4",
+    "statsmodels>=0.14",
+    "pandas>=2.0",
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "tqdm>=4.66",
+    "pyyaml>=6.0",
+]
+
+[tool.uv.sources]
+rusty-bpe   = { path = "rusty-bpe" }
+rusty-tfidf = { path = "rusty-tfidf" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

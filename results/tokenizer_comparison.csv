@@ -1,0 +1,5 @@
+tokenizer,mean_word_cost,median_word_cost,split_rate,high_info_split_rate,mean_RIF,top_1k_info_savings
+bert_wordpiece,2.134,2.0,0.7231,0.3106,0.0053,0.0094
+custom_bpe,2.757,3.0,0.969,0.8937,0.0062,0.0543
+gpt2,2.505,2.0,0.9371,0.788,0.0062,0.0528
+sentencepiece_unigram,2.453,2.0,0.8299,0.5875,0.0093,0.1043

@@ -1,0 +1,5 @@
+quadrant,count,pct,mean_tfidf,mean_token_count,mean_IWF
+high_info_high_cost,600,0.8,0.1182,4.252,0.381
+high_info_low_cost,7281,9.2,0.1182,2.238,0.1443
+low_info_high_cost,12296,15.6,0.0122,4.204,0.0388
+low_info_low_cost,58630,74.4,0.0166,2.503,0.0238
